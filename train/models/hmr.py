@@ -14,10 +14,14 @@ from .head.smpl_head import SMPLHead
 from ..core.config import PRETRAINED_CKPT_FOLDER
 
 
+from .backbone.e2e import E2E
+
+
 class HMR(nn.Module):
     def __init__(
             self,
-            backbone='resnet50',
+            #backbone='resnet50',
+            backbone='sd2_0',
             img_res=224,
             focal_length=5000,
             pretrained_ckpt=None,
@@ -36,6 +40,9 @@ class HMR(nn.Module):
                 downsample=True,
                 use_conv=(use_conv == 'conv'),
             ) 
+        elif backbone.startswith('sd2_0'):
+            #self.backbone = DIFT()
+            self.backbone = E2E()
         # Todo support resnet
         else:
             pass
