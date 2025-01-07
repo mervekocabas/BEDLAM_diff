@@ -37,11 +37,11 @@ class DatasetHMR(Dataset):
 
         if self.is_train:
             if '3dpw-train-smplx' in self.dataset:
-                self.pose_cam = self.data['smplx_pose'][:, :NUM_JOINTS_SMPLX*3].astype(np.float)
-                self.betas = self.data['smplx_shape'][:, :11].astype(np.float)
+                self.pose_cam = self.data['smplx_pose'][:, :NUM_JOINTS_SMPLX*3].astype(np.float64)
+                self.betas = self.data['smplx_shape'][:, :11].astype(np.float64)
             else:
-                self.pose_cam = self.data['pose_cam'][:, :NUM_JOINTS_SMPLX*3].astype(np.float)
-                self.betas = self.data['shape'].astype(np.float)
+                self.pose_cam = self.data['pose_cam'][:, :NUM_JOINTS_SMPLX*3].astype(np.float64)
+                self.betas = self.data['shape'].astype(np.float64)
 
             # For AGORA and 3DPW num betas are 10
             if self.betas.shape[-1] == 10:
@@ -64,8 +64,8 @@ class DatasetHMR(Dataset):
                 self.pose_cam = np.zeros((self.imgname.shape[0], 66))
                 self.betas = np.zeros((self.imgname.shape[0], 11))
             else:
-                self.pose_cam = self.data['pose_cam'].astype(np.float)
-                self.betas = self.data['shape'].astype(np.float)
+                self.pose_cam = self.data['pose_cam'].astype(np.float64)
+                self.betas = self.data['shape'].astype(np.float64)
         
         if self.is_train:
             if '3dpw-train-smplx' in self.dataset: # Only for 3dpw training
