@@ -230,7 +230,6 @@ class HMRTrainer(pl.LightningModule):
 
     def validation_epoch_end(self, outputs):
         logger.info(f'***** Epoch {self.current_epoch} *****')
-        """
         val_log = {}
 
         if len(self.val_ds) > 1:
@@ -267,31 +266,7 @@ class HMRTrainer(pl.LightningModule):
         self.log('val_loss_mpjpe', val_log[self.val_ds[0].dataset + '_val_mpjpe'], logger=True, sync_dist=True)
         for k, v in val_log.items():
             self.log(k, v, logger=True, sync_dist=True)
-        """
-        ds_name = "3dpw-test-cam"
-        mpjpe = 1000 * np.hstack(np.array([x for x in self.mpjpe])).mean()
-        pampjpe = 1000 * np.hstack(np.array([x for x in self.pampjpe])).mean()
-        pve = 1000 * np.hstack(np.array([x for x in self.pve])).mean()
-
-        # if self.trainer.is_global_zero:
-        logger.info(ds_name + '_MPJPE: ' + str(mpjpe))
-        logger.info(ds_name + '_PA-MPJPE: ' + str(pampjpe))
-        logger.info(ds_name + '_PVE: ' + str(pve))
-
-        self.log('val_loss', pampjpe, logger=True, sync_dist=True)
-        self.log('val_loss_mpjpe', mpjpe, logger=True, sync_dist=True)
-        self.log('val_mpjpe', mpjpe, logger=True, sync_dist=True)
-        self.log('val_pampjpe', pampjpe, logger=True, sync_dist=True)
-        self.log('val_pve', pve, logger=True, sync_dist=True)
-
-        self.best_images = []
-        self.worst_images = []
-
-        self.mpjpe.clear()
-        self.pampjpe.clear()
-        self.pve.clear()
-        gc.collect()
-        
+       
     def gt_projection(self, input_batch, output, batch_idx, max_save_img=1):
         save_dir = os.path.join(self.hparams.LOG_DIR, 'output_images_gt')
         os.makedirs(save_dir, exist_ok=True)
