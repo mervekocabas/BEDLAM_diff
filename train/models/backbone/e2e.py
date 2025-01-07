@@ -28,11 +28,11 @@ class E2E(torch.nn.Module):
         self.tokenizer    = CLIPTokenizer.from_pretrained("stabilityai/stable-diffusion-2", subfolder="tokenizer")
         self.text_encoder = CLIPTextModel.from_pretrained("stabilityai/stable-diffusion-2", subfolder="text_encoder")
         self.vae          = AutoencoderKL.from_pretrained("stabilityai/stable-diffusion-2", subfolder="vae")
-        #self.unet         = UNet2DConditionModel.from_pretrained("stabilityai/stable-diffusion-2", subfolder="unet", out_channels=1024, low_cpu_mem_usage=False, ignore_mismatched_sizes=True)
-        self.unet         = UNet2DConditionModel.from_pretrained("stabilityai/stable-diffusion-2", subfolder="unet")
+        self.unet         = UNet2DConditionModel.from_pretrained("stabilityai/stable-diffusion-2", subfolder="unet", out_channels=1024, low_cpu_mem_usage=False, ignore_mismatched_sizes=True)
+        #self.unet         = UNet2DConditionModel.from_pretrained("stabilityai/stable-diffusion-2", subfolder="unet")
 
         # Repeat weights
-        #self.unet.conv_out.weight.data = init.xavier_uniform_(self.unet.conv_out.weight, gain=0.01)
+        self.unet.conv_out.weight.data = init.xavier_uniform_(self.unet.conv_out.weight, gain=0.01)
         
         # Explanation: 1280 / 4 = 320 repetitions along the first dimension (channel)
         #self.unet.conv_out.weight.data = pipe.unet.conv_out.weight.data.detach().clone().repeat(320, 1, 1, 1)    
@@ -44,7 +44,7 @@ class E2E(torch.nn.Module):
         #self.unet.conv_out.weight.data = scaled_weight.detach().clone().repeat(180, 1, 1, 1)
 
         # Repeat biases
-        #self.unet.conv_out.bias.data = init.zeros_(self.unet.conv_out.bias)
+        self.unet.conv_out.bias.data = init.zeros_(self.unet.conv_out.bias)
         
         #import ipdb; ipdb.set_trace()
         # Repeat the bias 320 times to match 1280 channels
