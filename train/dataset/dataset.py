@@ -23,8 +23,9 @@ class DatasetHMR(Dataset):
         self.is_train = is_train
         self.options = options
         self.img_dir = DATASET_FOLDERS[dataset]
-        self.normalize_img = Normalize(mean=constants.IMG_NORM_MEAN,
-                                       std=constants.IMG_NORM_STD)
+        #self.normalize_img = Normalize(mean=constants.IMG_NORM_MEAN,
+        #                               std=constants.IMG_NORM_STD)
+        self.normalize_img = Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
         self.data = np.load(DATASET_FILES[is_train][dataset],
                             allow_pickle=True)
         self.imgname = self.data['imgname']
