@@ -77,7 +77,6 @@ class HMRTrainer(pl.LightningModule):
 
         # GT data
         images = batch['img']
-        import ipdb; ipdb.set_trace()
         gt_betas = batch['betas']
         bbox_scale = batch['scale']
         bbox_center = batch['center']
