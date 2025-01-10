@@ -28,7 +28,7 @@ class E2E(torch.nn.Module):
         self.tokenizer    = CLIPTokenizer.from_pretrained("stabilityai/stable-diffusion-2", subfolder="tokenizer")
         self.text_encoder = CLIPTextModel.from_pretrained("stabilityai/stable-diffusion-2", subfolder="text_encoder")
         self.vae          = AutoencoderKL.from_pretrained("stabilityai/stable-diffusion-2", subfolder="vae")
-        self.unet         = UNet2DConditionModel.from_pretrained("stabilityai/stable-diffusion-2", subfolder="unet", out_channels=1024, low_cpu_mem_usage=False, ignore_mismatched_sizes=True)
+        self.unet         = UNet2DConditionModel.from_pretrained("stabilityai/stable-diffusion-2", subfolder="unet", out_channels=1280, low_cpu_mem_usage=False, ignore_mismatched_sizes=True)
         #self.unet         = UNet2DConditionModel.from_pretrained("stabilityai/stable-diffusion-2", subfolder="unet")
 
         # Repeat weights
